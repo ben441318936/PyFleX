@@ -105,6 +105,43 @@ void CreateParticleGrid(Vec3 lower, int dimx, int dimy, int dimz, float radius, 
 	}
 }
 
+void CreateParticleGridWithLimit(Vec3 lower, int dimx, int dimy, int dimz, float radius, Vec3 velocity, float invMass, bool rigid, float rigidStiffness, int phase, float jitter=0.005f, int maxParticles=1000)
+{
+	if (rigid && g_buffers->rigidIndices.empty())
+		g_buffers->rigidOffsets.push_back(0);
+
+	int currentCount = 0;
+
+	for (int x = 0; x < dimx; ++x)
+	{
+		for (int y = 0; y < dimy; ++y)
+		{
+			for (int z=0; z < dimz; ++z)
+			{
+				if (rigid)
+					g_buffers->rigidIndices.push_back(int(g_buffers->positions.size()));
+
+				if (currentCount < maxParticles)
+				{
+					Vec3 position = lower + Vec3(float(x), float(y), float(z))*radius + RandomUnitVector()*jitter;
+
+					g_buffers->positions.push_back(Vec4(position.x, position.y, position.z, invMass));
+					g_buffers->velocities.push_back(velocity);
+					g_buffers->phases.push_back(phase);
+
+					currentCount++;
+				}
+			}
+		}
+	}
+
+	if (rigid)
+	{
+		g_buffers->rigidCoefficients.push_back(rigidStiffness);
+		g_buffers->rigidOffsets.push_back(int(g_buffers->rigidIndices.size()));
+	}
+}
+
 void CreateParticleSphere(Vec3 center, int dim, float radius, Vec3 velocity, float invMass, bool rigid, float rigidStiffness, int phase, float jitter=0.005f)
 {
 	if (rigid && g_buffers->rigidIndices.empty())

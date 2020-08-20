@@ -70,6 +70,9 @@ public:
 #include "scenes/yz_fluidshake.h"
 #include "scenes/yz_fluidiceshake.h"
 
+#include "scenes/jb_BoxBath.h"
+#include "scenes/jb_Custom.h"
+
 #include "scenes/adhesion.h"
 #include "scenes/armadilloshower.h"
 #include "scenes/bananas.h"
