@@ -34,7 +34,7 @@ public:
 		auto buf = scene_params.request();
     	auto ptr = (float *) buf.ptr;
 
-		float radius = ptr[0 * 4];
+		float radius = ptr[0];
 		// float radius = 0.3;
 
 		// deforming bunny
@@ -66,16 +66,19 @@ public:
 
 		float restDistance = radius*0.55f;
 
-		// int max_particles = int(ptr[1 * 4]);
-		int max_particles = 100;
+		int max_particles = int(ptr[1]);
+		// int max_particles = 100;
 
 		// void CreateParticleGrid(Vec3 lower, int dimx, int dimy, int dimz, float radius, Vec3 velocity, float invMass, bool rigid, float rigidStiffness, int phase, float jitter=0.005f)
-		CreateParticleGridWithLimit(Vec3(0.0f, 0.0f, 0.0f), max_particles, 1, 1, restDistance, Vec3(0.0f), 1.0f, false, 0.0f, NvFlexMakePhase(0, eNvFlexPhaseSelfCollide | eNvFlexPhaseFluid), 0.005f, max_particles);
+		// CreateParticleGridWithLimit(Vec3(0.0f, 0.0f, 0.0f), max_particles, 2, 2, restDistance, Vec3(0.0f), 1.0f, false, 0.0f, NvFlexMakePhase(0, eNvFlexPhaseSelfCollide | eNvFlexPhaseFluid), 0.005f, max_particles);
 
-		// g_sceneLower = Vec3(ptr[2 * 4], ptr[3 * 4], ptr[4 * 4]);
-		// g_sceneUpper = Vec3(ptr[5 * 4], ptr[6 * 4], ptr[7 * 4]);
-		g_sceneLower = Vec3(0.0f, 0.0f, 0.0f);
-		g_sceneUpper = Vec3(1.0f, 1.0f, 1.0f);
+		CreateParticleZero(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f), 1.0f, NvFlexMakePhase(0, eNvFlexPhaseSelfCollide | eNvFlexPhaseFluid), 0.005f, max_particles);
+
+
+		g_sceneLower = Vec3(ptr[2], ptr[3], ptr[4]);
+		g_sceneUpper = Vec3(ptr[5], ptr[6], ptr[7]);
+		// g_sceneLower = Vec3(0.0f, 0.0f, 0.0f);
+		// g_sceneUpper = Vec3(1.0f, 1.0f, 1.0f);
 
 		g_numSubsteps = 2;
 
@@ -93,8 +96,8 @@ public:
 		g_maxDiffuseParticles = 0;
 		g_diffuseScale = 0.5f;
 
-		// g_fluidColor = Vec4(ptr[8 * 4], ptr[9 * 4], ptr[10 * 4], ptr[11 * 4]);
-		g_fluidColor = Vec4(0.113f, 0.425f, 0.55f, 1.f);
+		g_fluidColor = Vec4(ptr[8], ptr[9], ptr[10], ptr[11]);
+		// g_fluidColor = Vec4(0.113f, 0.425f, 0.55f, 1.f);
 
 
 		Emitter e1;
@@ -122,21 +125,19 @@ public:
 		g_drawPoints = true;
 		g_drawMesh = false;
 
-		// switch (int(ptr[12 * 4]))
-		// {
-		// 	case 0:
-		// 		g_drawEllipsoids = false;
-		// 		break;
-		// 	case 1:
-		// 		g_drawEllipsoids = true;
-		// 		break;
-		// 	default:
-		// 		g_drawEllipsoids = true;
-		// }
-		g_drawEllipsoids = true;
+		switch (int(ptr[12]))
+		{
+			case 0:
+				g_drawEllipsoids = false;
+				break;
+			case 1:
+				g_drawEllipsoids = true;
+				break;
+			default:
+				g_drawEllipsoids = true;
+		}
+		// g_drawEllipsoids = true;
 
 		g_drawDiffuse = true;
 	}
-
-	bool mDam;
 };

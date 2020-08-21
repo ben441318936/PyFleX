@@ -142,6 +142,18 @@ void CreateParticleGridWithLimit(Vec3 lower, int dimx, int dimy, int dimz, float
 	}
 }
 
+void CreateParticleZero(Vec3 lower, Vec3 velocity, float invMass, int phase, float jitter=0.005f, int maxParticles=1000)
+{
+	for (int i=0; i<maxParticles; i++)
+	{
+		Vec3 position = lower + RandomUnitVector()*jitter;
+
+		g_buffers->positions.push_back(Vec4(position.x, position.y, position.z, invMass));
+		g_buffers->velocities.push_back(velocity);
+		g_buffers->phases.push_back(phase);
+	}
+}
+
 void CreateParticleSphere(Vec3 center, int dim, float radius, Vec3 velocity, float invMass, bool rigid, float rigidStiffness, int phase, float jitter=0.005f)
 {
 	if (rigid && g_buffers->rigidIndices.empty())

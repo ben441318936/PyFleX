@@ -7,9 +7,12 @@ import time
 def rand_float(lo, hi):
     return np.random.rand() * (hi - lo) + lo
 
+exp = "exp31"
+time_step = 600
+num_particles = 2400
+particle_path_prefix = "/home/jingbin/Documents/Github/PBF3D_taichi/viz_results/3D/new_MPC/{}/particles/".format(exp)    
 
-time_step = 150
-des_dir = 'test_Custom'
+des_dir = "test_Custom_{}".format(exp)
 os.system('mkdir -p ' + des_dir)
 
 
@@ -23,44 +26,35 @@ pyflex.init()
 # params[8,9,10,11] -> fluid color
 # params[12] -> draw options, 0 = particles, 1 = fluid render
 scene_params = np.array([0.3, 
-                         100.0,
+                         num_particles,
                          0.0, 0.0, 0.0,
-                         15.0, 20.0, 15.0,
-                         1.0, 1.0, 1.0, 1.0,
+                         10.0, 10.0, 10.0,
+                         1.0, 0.0, 0.0, 1.0,
                          1.0])
 pyflex.set_scene(10, scene_params, 0)
 
 print("Scene Upper:", pyflex.get_scene_upper())
 print("Scene Lower:", pyflex.get_scene_lower())
 
-# particle_pos = pyflex.get_positions()
-# print(particle_pos)
-# print(particle_pos.shape)
+# Set all the particles to unseen locations
+pos = np.ones((num_particles,4))
+pos[:,0:3] = pos[:,0:3] * 20
 
-# new_pos = particle_pos.reshape((135,4))
-# new_pos[134,0] = 1
-# new_pos = new_pos.reshape((135*4,))
+# Function for putting particle positions into the array
+def load_pos(particles):
+    for i in range(particles.shape[0]):
+        if i < num_particles:
+            pos[i,0:3] = particles[i,0:3]
 
-# pyflex.set_positions(new_pos)
-
-pos = np.ones((135,4))
-pos[:,0:3] = pos[:,0:3] * 10
-pos[0,0:3] = np.array([0.0, 0.0, 0.0])
-pos[1,0:3] = np.array([0.0, 0.0, 0.0])
-
-# print(pos)
 
 for i in range(time_step):
-    pos[0,0] = 0.005*i
-    pos[1,0] = 0.005*i
-    pos[1,1] = 0.005*i
+    # Load in the particles
+    path = particle_path_prefix+"frame_{}.npy".format(i)
+    particles = np.load(path)
+    load_pos(particles)
+    
     pyflex.set_positions(pos)
-    # pyflex.step(capture=0, path=os.path.join(des_dir, 'render_%d.tga' % i))
-    pyflex.render(capture=0, path=os.path.join(des_dir, 'render_%d.tga' % i))
-    # print("Num particles:", pyflex.get_n_particles())
+    pyflex.render(capture=1, path=os.path.join(des_dir, "render_%04d.tga" % i))
 
-# particle_pos = pyflex.get_positions()
-# print(particle_pos)
-# print(particle_pos.shape)
 
 pyflex.clean()
