@@ -9,7 +9,7 @@ def rand_float(lo, hi):
 
 exp = "exp31"
 time_step = 600
-num_particles = 2400
+num_particles = 3000
 particle_path_prefix = "/home/jingbin/Documents/Github/PBF3D_taichi/viz_results/3D/new_MPC/{}/particles/".format(exp)    
 
 des_dir = "test_Custom_{}".format(exp)
@@ -28,9 +28,9 @@ pyflex.init()
 scene_params = np.array([0.3, 
                          num_particles,
                          0.0, 0.0, 0.0,
-                         10.0, 10.0, 10.0,
+                         3, 3, 3,
                          1.0, 0.0, 0.0, 1.0,
-                         1.0])
+                         0.0])
 pyflex.set_scene(10, scene_params, 0)
 
 print("Scene Upper:", pyflex.get_scene_upper())
@@ -46,14 +46,19 @@ def load_pos(particles):
         if i < num_particles:
             pos[i,0:3] = particles[i,0:3]
 
+# # Load in the particles
+# path = particle_path_prefix+"frame_{}.npy".format(599)
+# particles = np.load(path)
+# load_pos(particles)
+# pyflex.set_positions(pos)
 
 for i in range(time_step):
     # Load in the particles
     path = particle_path_prefix+"frame_{}.npy".format(i)
     particles = np.load(path)
     load_pos(particles)
-    
     pyflex.set_positions(pos)
+    # pyflex.step(capture=1, path=os.path.join(des_dir, "render_%04d.tga" % i))
     pyflex.render(capture=1, path=os.path.join(des_dir, "render_%04d.tga" % i))
 
 

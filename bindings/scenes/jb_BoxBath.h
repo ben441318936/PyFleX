@@ -57,12 +57,12 @@ public:
 		{
 		    // void CreateParticleGrid(Vec3 lower, int dimx, int dimy, int dimz, float radius, Vec3 velocity, float invMass, bool rigid, float rigidStiffness, int phase, float jitter=0.005f)
             int maxParticles = 800;
-			CreateParticleGridWithLimit(Vec3(0.0f, 0.0f, 0.0f), 3, 15, 3, restDistance, Vec3(0.0f), 1.0f, false, 0.0f, NvFlexMakePhase(0, eNvFlexPhaseSelfCollide | eNvFlexPhaseFluid), 0.005f, maxParticles);
+			CreateParticleGridWithLimit(Vec3(0.0f, 0.0f, 0.0f), 10, 15, 5, restDistance, Vec3(0.0f), 1.0f, false, 0.0f, NvFlexMakePhase(0, eNvFlexPhaseSelfCollide | eNvFlexPhaseFluid), 0.005f, maxParticles);
 			g_lightDistance *= 0.5f;
 		}
 
 		g_sceneLower = Vec3(0.0f, 0.0f, 0.0f);
-		g_sceneUpper = Vec3(1.0f, 1.0f, 1.0f);
+		g_sceneUpper = Vec3(5.0f, 5.0f, 5.0f);
 
 		g_numSubsteps = 2;
 

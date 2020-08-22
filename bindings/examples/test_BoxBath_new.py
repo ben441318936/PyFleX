@@ -8,7 +8,7 @@ def rand_float(lo, hi):
     return np.random.rand() * (hi - lo) + lo
 
 
-time_step = 150
+time_step = 600
 des_dir = 'test_BoxBath_new'
 os.system('mkdir -p ' + des_dir)
 
@@ -31,17 +31,17 @@ print("Scene Lower:", pyflex.get_scene_lower())
 
 # pyflex.set_positions(new_pos)
 
-pos = np.ones((135,4))
-pos[:,0:3] = pos[:,0:3] * 10
-pos[0,0:3] = np.array([0.0, 0.0, 0.0])
+# pos = np.ones((135,4))
+# pos[:,0:3] = pos[:,0:3] * 10
+# pos[0,0:3] = np.array([0.0, 0.0, 0.0])
 
 # print(pos)
 
 for i in range(time_step):
-    pos[0,0] = 0.005*i
-    pyflex.set_positions(pos)
-    # pyflex.step(capture=0, path=os.path.join(des_dir, 'render_%d.tga' % i))
-    pyflex.render(capture=0, path=os.path.join(des_dir, 'render_%d.tga' % i))
+    # pos[0,0] = 0.005*i
+    # pyflex.set_positions(pos)
+    pyflex.step(capture=0, path=os.path.join(des_dir, 'render_%d.tga' % i))
+    # pyflex.render(capture=0, path=os.path.join(des_dir, 'render_%d.tga' % i))
     # print("Num particles:", pyflex.get_n_particles())
 
 # particle_pos = pyflex.get_positions()
