@@ -6,7 +6,7 @@ ffmpeg -framerate 10 -i ./frames/image_%4d.png -c:v libx264 -r 30 out.mp4
 
 ffmpeg -framerate 10 -i ./frames/image_%4d.png -c:v libx264 -r 30 out.mp4
 
-ffmpeg -framerate 10 -i ./render_%4d.tga -c:v libx264 -r 30 out.mp4
+ffmpeg -framerate 30 -i ./render_%4d.tga -c:v libx264 -r 30 out.mp4
 
 ffmpeg -ss 00:00 -i out.mp4 -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 out.gif
 

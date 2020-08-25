@@ -9,7 +9,7 @@ def rand_float(lo, hi):
 
 exp = "exp31"
 time_step = 600
-num_particles = 3000
+num_particles = 3600
 particle_path_prefix = "/home/jingbin/Documents/Github/PBF3D_taichi/viz_results/3D/new_MPC/{}/particles/".format(exp)    
 
 des_dir = "test_Custom_{}".format(exp)
@@ -25,12 +25,12 @@ pyflex.init()
 # params[5,6,7] -> upper limit of scene box
 # params[8,9,10,11] -> fluid color
 # params[12] -> draw options, 0 = particles, 1 = fluid render
-scene_params = np.array([0.3, 
+scene_params = np.array([0.2, 
                          num_particles,
                          0.0, 0.0, 0.0,
                          3, 3, 3,
                          1.0, 0.0, 0.0, 1.0,
-                         0.0])
+                         1.0])
 pyflex.set_scene(10, scene_params, 0)
 
 print("Scene Upper:", pyflex.get_scene_upper())
