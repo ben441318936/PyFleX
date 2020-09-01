@@ -72,6 +72,7 @@ public:
 
 #include "scenes/jb_BoxBath.h"
 #include "scenes/jb_Custom.h"
+#include "scenes/jb_Custom_mesh.h"
 
 #include "scenes/adhesion.h"
 #include "scenes/armadilloshower.h"

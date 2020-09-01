@@ -23,18 +23,20 @@ pyflex.init()
 
 # Scene params
 # params[0] -> radius
-# params[1] -> max number of particles
-# params[2,3,4] -> lower limit of scene box
-# params[5,6,7] -> upper limit of scene box
-# params[8,9,10,11] -> fluid color
-# params[12] -> draw options, 0 = particles, 1 = fluid render
+# params[1] -> scale
+# params[2] -> max number of particles
+# params[3,4,5] -> lower limit of scene box
+# params[6,7,8] -> upper limit of scene box
+# params[9,10,11,12] -> fluid color
+# params[13] -> draw options, 0 = particles, 1 = fluid render
 scene_params = np.array([0.2, 
+                         scale,
                          num_particles,
                          0.0, 0.0, 0.0,
-                         15/scale, 10/scale, 15/scale,
+                         15, 10, 15,
                          1.0, 0.0, 0.0, 1.0,
                          1.0])
-pyflex.set_scene(10, scene_params, 0)
+pyflex.set_scene(11, scene_params, 0)
 
 print("Scene Upper:", pyflex.get_scene_upper())
 print("Scene Lower:", pyflex.get_scene_lower())

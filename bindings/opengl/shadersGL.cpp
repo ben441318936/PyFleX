@@ -2917,6 +2917,83 @@ void DrawGpuMeshInstances(GpuMesh* m, const Matrix44* xforms, int n, const Vec3&
 	}
 }
 
+void DrawGpuMesh4fv(GpuMesh* m, const Matrix44& xform, const Vec4& color)
+{
+	if (m)
+	{
+		GLint program;
+		glGetIntegerv(GL_CURRENT_PROGRAM, &program);
+
+		if (program)
+			glUniformMatrix4fv( glGetUniformLocation(program, "objectTransform"), 1, false, xform);
+
+		Vec3 color3 = Vec3(color[0], color[1], color[2]);
+
+		glVerify(glColor4fv(color));
+		glVerify(glSecondaryColor3fv(color3));
+
+		glVerify(glEnableClientState(GL_VERTEX_ARRAY));
+		glVerify(glBindBuffer(GL_ARRAY_BUFFER, m->mPositionsVBO));
+		glVerify(glVertexPointer(3, GL_FLOAT, sizeof(float)*3, 0));	
+
+		glVerify(glEnableClientState(GL_NORMAL_ARRAY));
+		glVerify(glBindBuffer(GL_ARRAY_BUFFER, m->mNormalsVBO));
+		glVerify(glNormalPointer(GL_FLOAT, sizeof(float)*3, 0));
+		
+		glVerify(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->mIndicesIBO));
+
+		glVerify(glDrawElements(GL_TRIANGLES, m->mNumFaces*3, GL_UNSIGNED_INT, 0));
+
+		glVerify(glDisableClientState(GL_VERTEX_ARRAY));
+		glVerify(glDisableClientState(GL_NORMAL_ARRAY));
+
+		glVerify(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+		glVerify(glBindBuffer(GL_ARRAY_BUFFER, 0));	
+
+		if (program)
+			glUniformMatrix4fv(glGetUniformLocation(program, "objectTransform"), 1, false, Matrix44::kIdentity);
+	}
+}
+
+void DrawGpuMeshInstances4fv(GpuMesh* m, const Matrix44* xforms, int n, const Vec4& color)
+{
+	if (m)
+	{
+		GLint program;
+		glGetIntegerv(GL_CURRENT_PROGRAM, &program);
+
+		GLint param = glGetUniformLocation(program, "objectTransform");
+
+		Vec3 color3 = Vec3(color[0], color[1], color[2]);
+
+		glVerify(glColor4fv(color));
+		glVerify(glSecondaryColor3fv(color3));
+
+		glVerify(glEnableClientState(GL_VERTEX_ARRAY));
+		glVerify(glBindBuffer(GL_ARRAY_BUFFER, m->mPositionsVBO));
+		glVerify(glVertexPointer(3, GL_FLOAT, sizeof(float)*3, 0));	
+
+		glVerify(glEnableClientState(GL_NORMAL_ARRAY));
+		glVerify(glBindBuffer(GL_ARRAY_BUFFER, m->mNormalsVBO));
+		glVerify(glNormalPointer(GL_FLOAT, sizeof(float)*3, 0));
+		
+		glVerify(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m->mIndicesIBO));
+
+		for (int i=0; i < n; ++i)
+		{
+			if (program)
+				glUniformMatrix4fv( param, 1, false, xforms[i]);
+
+			glVerify(glDrawElements(GL_TRIANGLES, m->mNumFaces*3, GL_UNSIGNED_INT, 0));
+		}
+
+		glVerify(glDisableClientState(GL_VERTEX_ARRAY));
+		glVerify(glDisableClientState(GL_NORMAL_ARRAY));
+
+		glVerify(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+	}
+}
+
 void BeginLines()
 {
 	glUseProgram(0);

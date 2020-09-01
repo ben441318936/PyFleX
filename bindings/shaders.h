@@ -149,6 +149,8 @@ GpuMesh* CreateGpuMesh(const Mesh* m);
 void DestroyGpuMesh(GpuMesh* m);
 void DrawGpuMesh(GpuMesh* m, const Matrix44& xform, const Vec3& color);
 void DrawGpuMeshInstances(GpuMesh* m, const Matrix44* xforms, int n, const Vec3& color);
+void DrawGpuMesh4fv(GpuMesh* m, const Matrix44& xform, const Vec4& color);
+void DrawGpuMeshInstances4fv(GpuMesh* m, const Matrix44* xforms, int n, const Vec4& color);
 
 // main lighting shader
 void BindSolidShader(Vec3 lightPos, Vec3 lightTarget, Matrix44 lightTransform, ShadowMap* shadowTex, float bias, Vec4 fogColor);

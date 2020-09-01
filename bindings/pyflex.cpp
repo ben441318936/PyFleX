@@ -769,8 +769,8 @@ void Init(int scene, py::array_t<float> scene_params, bool centerCamera = true, 
     GetShapeBounds(shapeLower, shapeUpper);
 
     // update bounds
-    g_sceneLower = Min(Min(g_sceneLower, particleLower), shapeLower);
-    g_sceneUpper = Max(Max(g_sceneUpper, particleUpper), shapeUpper);
+    // g_sceneLower = Min(Min(g_sceneLower, particleLower), shapeLower);
+    // g_sceneUpper = Max(Max(g_sceneUpper, particleUpper), shapeUpper);
 
     g_sceneLower -= g_params.collisionDistance;
     g_sceneUpper += g_params.collisionDistance;
@@ -1506,6 +1506,7 @@ void DrawShapes() {
         //bool dynamic = int(flags&eNvFlexShapeFlagDynamic) > 0;
 
         Vec3 color = Vec3(0.9f);
+        
 
         if (flags & eNvFlexShapeFlagTrigger) {
             color = Vec3(0.6f, 1.0, 0.6f);
@@ -1562,6 +1563,8 @@ void DrawShapes() {
         else if (type == eNvFlexShapeTriangleMesh) {
             if (g_meshes.find(geo.triMesh.mesh) != g_meshes.end()) {
                 GpuMesh* m = g_meshes[geo.triMesh.mesh];
+
+                // Vec4 color = Vec4(1.0f, 0.0f, 0.0f, 0.5f);
 
                 if (m) {
                     Matrix44 xform = TranslationMatrix(Point3(position))*RotationMatrix(Quat(rotation))*ScaleMatrix(geo.triMesh.scale);
@@ -2446,6 +2449,7 @@ void pyflex_init() {
 
     g_scenes.push_back(new jb_BoxBath("Box Bath", true));
     g_scenes.push_back(new jb_Custom("Custom"));
+    g_scenes.push_back(new jb_Custom_mesh("Custom"));
 
     /*
     // opening scene
