@@ -1564,7 +1564,7 @@ void DrawShapes() {
             if (g_meshes.find(geo.triMesh.mesh) != g_meshes.end()) {
                 GpuMesh* m = g_meshes[geo.triMesh.mesh];
 
-                // Vec4 color = Vec4(1.0f, 0.0f, 0.0f, 0.5f);
+                Vec3 color = Vec3(0.5f, 0.5f, 1.0f);
 
                 if (m) {
                     Matrix44 xform = TranslationMatrix(Point3(position))*RotationMatrix(Quat(rotation))*ScaleMatrix(geo.triMesh.scale);

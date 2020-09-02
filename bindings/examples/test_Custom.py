@@ -8,8 +8,8 @@ def rand_float(lo, hi):
     return np.random.rand() * (hi - lo) + lo
 
 exp = "exp41"
-time_step = 500
-num_particles = 2700
+time_step = 300
+num_particles = 900
 
 scale = 5
 
@@ -31,7 +31,7 @@ pyflex.init()
 scene_params = np.array([0.2, 
                          num_particles,
                          0.0, 0.0, 0.0,
-                         15/scale, 10/scale, 15/scale,
+                         15/scale, 20/scale, 15/scale,
                          1.0, 0.0, 0.0, 1.0,
                          1.0])
 pyflex.set_scene(10, scene_params, 0)
