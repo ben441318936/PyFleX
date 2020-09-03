@@ -7,8 +7,8 @@ import time
 def rand_float(lo, hi):
     return np.random.rand() * (hi - lo) + lo
 
-exp = "exp43"
-time_step = 400
+exp = "exp41"
+time_step = 200
 num_particles = 1800
 
 scale = 5

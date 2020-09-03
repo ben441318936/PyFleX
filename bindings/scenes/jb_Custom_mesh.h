@@ -51,7 +51,7 @@ public:
 		make_path(bunny_path, "/data/bunny.ply");
 		make_path(box_path, "/data/box.ply");
 		make_path(sphere_path, "/data/sphere.ply");
-		make_path(custom_box_path, "/data/custom_sphere.obj");
+		make_path(custom_box_path, "/data/maze_display.obj");
 
         srand(time(NULL) + thread_idx);
         float x = rand_float(0.45, 1.0);
