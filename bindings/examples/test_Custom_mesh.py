@@ -7,11 +7,11 @@ import time
 def rand_float(lo, hi):
     return np.random.rand() * (hi - lo) + lo
 
-exp = "exp41"
-time_step = 200
-num_particles = 1800
+exp = "exp56"
+time_step = 800
+num_particles = 600
 
-scale = 5
+scale = 10
 
 particle_path_prefix = "/home/jingbin/Documents/Github/PBF3D_taichi/viz_results/3D/new_MPC/{}/particles/".format(exp)    
 
@@ -29,7 +29,7 @@ pyflex.init()
 # params[6,7,8] -> upper limit of scene box
 # params[9,10,11,12] -> fluid color
 # params[13] -> draw options, 0 = particles, 1 = fluid render
-scene_params = np.array([0.2, 
+scene_params = np.array([0.1, 
                          scale,
                          num_particles,
                          0.0, 0.0, 0.0,
@@ -51,7 +51,7 @@ def clear_pos():
 def load_pos(particles):
     print(particles.shape[0])
     for i in range(particles.shape[0]):
-        if i < num_particles:
+        if i < num_particles and particles[i,1] < 5.5/scale:
             pos[i,0:3] = particles[i,0:3]
 
 # # Load in the particles
@@ -61,14 +61,15 @@ def load_pos(particles):
 # pyflex.set_positions(pos)
 
 for i in range(time_step):
-    # Load in the particles
-    path = particle_path_prefix+"frame_{}.npy".format(i)
-    particles = np.load(path) / scale
-    clear_pos()
-    load_pos(particles)
-    pyflex.set_positions(pos)
-    # pyflex.step(capture=1, path=os.path.join(des_dir, "render_%04d.tga" % i))
-    pyflex.render(capture=1, path=os.path.join(des_dir, "render_%04d.tga" % i))
+    if i % 2 == 0:
+        # Load in the particles
+        path = particle_path_prefix+"frame_{}.npy".format(i)
+        particles = np.load(path) / scale
+        clear_pos()
+        load_pos(particles)
+        pyflex.set_positions(pos)
+        # pyflex.step(capture=1, path=os.path.join(des_dir, "render_%04d.tga" % i))
+        pyflex.render(capture=1, path=os.path.join(des_dir, "render_%04d.tga" % i))
 
 
 pyflex.clean()

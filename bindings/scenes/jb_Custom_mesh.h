@@ -51,7 +51,8 @@ public:
 		make_path(bunny_path, "/data/bunny.ply");
 		make_path(box_path, "/data/box.ply");
 		make_path(sphere_path, "/data/sphere.ply");
-		make_path(custom_box_path, "/data/maze_display.obj");
+		// make_path(custom_box_path, "/data/heart2assem.obj");
+		make_path(custom_box_path, "/data/custom_heart2_2.obj");
 
         srand(time(NULL) + thread_idx);
         float x = rand_float(0.45, 1.0);
@@ -153,7 +154,8 @@ public:
 	{
 		//g_camPos = Vec3((g_sceneLower.x + g_sceneUpper.x)*0.5f, min(g_sceneUpper.y*1.25f, 6.0f), g_sceneUpper.z + min(g_sceneUpper.y, 6.0f)*2.0f);
         // g_camAngle = Vec3(0.0f, -DegToRad(15.0f), 0.0f);
-		g_camPos = Vec3((g_sceneLower.x + g_sceneUpper.x)*0.5f, g_sceneUpper.y*2.5f, (g_sceneLower.z + g_sceneUpper.z)*0.5f);
+		g_camPos = Vec3((g_sceneLower.x + g_sceneUpper.x)*0.5f, g_sceneUpper.y*2.0f, (g_sceneLower.z + g_sceneUpper.z)*0.5f);
 		g_camAngle = Vec3(DegToRad(90.0f), -DegToRad(90.0f), 0.0f);
+		// g_camAngle = Vec3(DegToRad(90.0f), -DegToRad(40.0f), 0.0f);
 	}
 };
