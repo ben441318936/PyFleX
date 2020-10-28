@@ -48,11 +48,16 @@ public:
 		char box_path[100];
 		char sphere_path[100];
 		char custom_box_path[100];
+		char tip_path[100];
+
 		make_path(bunny_path, "/data/bunny.ply");
 		make_path(box_path, "/data/box.ply");
 		make_path(sphere_path, "/data/sphere.ply");
 		// make_path(custom_box_path, "/data/heart2assem.obj");
-		make_path(custom_box_path, "/data/custom_heart2_2.obj");
+		// make_path(custom_box_path, "/data/custom_heart2_2.obj");
+		make_path(tip_path, "/data/tip.obj");
+		make_path(custom_box_path, "/data/center_obs_shallow.obj");
+		// make_path(custom_box_path, "/data/cavity2.obj");
 
         srand(time(NULL) + thread_idx);
         float x = rand_float(0.45, 1.0);
@@ -63,13 +68,19 @@ public:
         // CreateParticleShape(GetFilePathByPlatform(box_path).c_str(), Vec3(x, -0.0155f, z), 0.2f, 0.0f, s, Vec3(0.0f, 0.0f, 0.0f), m, true, 1.0f, NvFlexMakePhase(group++, 0), false, 0.0f);
 		//CreateParticleShape(GetFilePathByPlatform(box_path).c_str(), Vec3(x_1, -0.0155f, z_1), 0.2f, 0.0f, s, Vec3(0.0f, 0.0f, 0.0f), m, true, 1.0f, NvFlexMakePhase(group++, 0), false, 0.0f);
 		//CreateParticleShape(GetFilePathByPlatform(bunny_path).c_str(), Vec3(3.0f, 0.0f, 0.0f), 0.5f, 0.0f, s, Vec3(0.0f, 0.0f, 0.0f), m, true, 1.0f, NvFlexMakePhase(group++, 0), true, 0.0f);
-		//CreateParticleShape(GetFilePathByPlatform(sphere_path).c_str(), Vec3(1.0f, 0.0f, 1.0f), 0.45f, 0.0f, s, Vec3(0.0f, 0.0f, 0.0f), m, true, 1.0f, NvFlexMakePhase(group++, 0), true, 0.0f);
 		//CreateParticleShape(GetFilePathByPlatform(bunny_path).c_str(), Vec3(2.0f, 0.0f, 1.0f), 0.5f, 0.0f, s, Vec3(0.0f, 0.0f, 0.0f), m, true, 1.0f, NvFlexMakePhase(group++, 0), true, 0.0f);
 		//CreateParticleShape(GetFilePathByPlatform(box_path).c_str(), Vec3(2.0f, 0.0f, 0.0f), 0.45f, 0.0f, s, Vec3(0.0f, 0.0f, 0.0f), m, true, 1.0f, NvFlexMakePhase(group++, 0), true, 0.0f);
 
+		// CreateParticleShape(GetFilePathByPlatform(sphere_path).c_str(), Vec3(0.0f, 0.0f, 0.0f), 0.1f, 0.0f, s, Vec3(0.0f, 0.0f, 0.0f), m, true, 1.0f, NvFlexMakePhase(group++, 0), true, 0.0f);
+		// CreateParticleShape(GetFilePathByPlatform(tip_path).c_str(), Vec3(0.0f, 0.0f, 0.0f), 0.3f, 0.0f, s, Vec3(0.0f, 0.0f, 0.0f), m, true, 1.0f, NvFlexMakePhase(group++, 0), true, 0.0f);
+		
 		Mesh* mesh1 = ImportMesh(custom_box_path);
 		NvFlexTriangleMeshId mesh1_id = CreateTriangleMesh(mesh1);
 		AddTriangleMesh(mesh1_id, Vec3(0.0f, 0.0f, 0.0f), Quat(), Vec3(1/scale, 1/scale, 1/scale));
+
+		Mesh* mesh2 = ImportMesh(tip_path);
+		NvFlexTriangleMeshId mesh2_id = CreateTriangleMesh(mesh2);
+		AddTriangleMesh(mesh2_id, Vec3(0.1f, 0.15f, 0.6f), Quat(), Vec3(10, 10, 10));
 		
 		g_numSolidParticles = g_buffers->positions.size();		
 
@@ -132,7 +143,7 @@ public:
 
 		// draw options		
 		g_drawPoints = true;
-		g_drawMesh = false;
+		g_drawMesh = true;
 
 		switch (int(ptr[13]))
 		{
@@ -152,10 +163,12 @@ public:
 
 	void CenterCamera()
 	{
-		//g_camPos = Vec3((g_sceneLower.x + g_sceneUpper.x)*0.5f, min(g_sceneUpper.y*1.25f, 6.0f), g_sceneUpper.z + min(g_sceneUpper.y, 6.0f)*2.0f);
-        // g_camAngle = Vec3(0.0f, -DegToRad(15.0f), 0.0f);
-		g_camPos = Vec3((g_sceneLower.x + g_sceneUpper.x)*0.5f, g_sceneUpper.y*2.0f, (g_sceneLower.z + g_sceneUpper.z)*0.5f);
-		g_camAngle = Vec3(DegToRad(90.0f), -DegToRad(90.0f), 0.0f);
-		// g_camAngle = Vec3(DegToRad(90.0f), -DegToRad(40.0f), 0.0f);
+		g_camPos = Vec3((g_sceneLower.x + g_sceneUpper.x)*1.3f, g_sceneUpper.y*1.2f, (g_sceneLower.z + g_sceneUpper.z)*0.5f);
+		g_camAngle = Vec3(DegToRad(90.0f), -DegToRad(45.0f), 0.0f);
+
+		// g_camPos = Vec3((g_sceneLower.x + g_sceneUpper.x)*0.75f, g_sceneUpper.y*1.2f, (g_sceneLower.z + g_sceneUpper.z)*0.5f);
+		// g_camAngle = Vec3(DegToRad(90.0f), -DegToRad(90.0f), 0.0f);
+
+
 	}
 };
