@@ -967,7 +967,7 @@ void DemoContextD3D11::renderEllipsoids(FluidRenderer* rendererIn, FluidRenderBu
 	params.invProjection = float3(screenAspect * viewHeight, viewHeight, 1.0f);
 
 	// make sprites larger to get smoother thickness texture
-	const float thicknessScale = 4.0f;
+	const float thicknessScale = 1.0f;
 	params.pointRadius = thicknessScale * radius;
 
 	params.shadowMap = (ShadowMapD3D*)m_shadowMap;

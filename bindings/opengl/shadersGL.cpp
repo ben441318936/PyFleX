@@ -2398,6 +2398,8 @@ void RenderEllipsoids(FluidRenderer* render, FluidRenderBuffers* buffersIn, int 
 
 	glVerify(glUseProgram(render->mCompositeProgram));	
 
+	// color = Vec4(0.0f, 0.0f, 1.0f, 1.0f);
+
 	glVerify(glUniform2fv(glGetUniformLocation(render->mCompositeProgram, "invTexScale"), 1, Vec2(1.0f/screenWidth, screenAspect/screenWidth)));
 	glVerify(glUniform2fv(glGetUniformLocation(render->mCompositeProgram, "clipPosToEye"), 1, Vec2(tanf(fov*0.5f)*screenAspect, tanf(fov*0.5f))));
 	glVerify(glUniform4fv(glGetUniformLocation(render->mCompositeProgram, "color"), 1, color));

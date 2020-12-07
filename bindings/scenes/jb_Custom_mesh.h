@@ -163,7 +163,10 @@ public:
 
 	void CenterCamera()
 	{
-		g_camPos = Vec3((g_sceneLower.x + g_sceneUpper.x)*1.3f, g_sceneUpper.y*1.2f, (g_sceneLower.z + g_sceneUpper.z)*0.5f);
+		// g_camPos = Vec3((g_sceneLower.x + g_sceneUpper.x)*1.3f, g_sceneUpper.y*1.2f, (g_sceneLower.z + g_sceneUpper.z)*0.5f);
+		// g_camAngle = Vec3(DegToRad(90.0f), -DegToRad(50.0f), 0.0f);
+
+		g_camPos = Vec3((g_sceneLower.x + g_sceneUpper.x)*1.4f, g_sceneUpper.y*1.2f, (g_sceneLower.z + g_sceneUpper.z)*0.5f);
 		g_camAngle = Vec3(DegToRad(90.0f), -DegToRad(45.0f), 0.0f);
 
 		// g_camPos = Vec3((g_sceneLower.x + g_sceneUpper.x)*0.75f, g_sceneUpper.y*1.2f, (g_sceneLower.z + g_sceneUpper.z)*0.5f);
